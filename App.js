@@ -1,20 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { View } from 'react-native';
+
+import { styles } from './src/themes/stylesTheme';
+
+import { Title, ViewPokemon, ClickmeButton } from './src/components';
+import { LogBoxMesagge, getPokemon, initPokemon, handleClick } from './src/helpers';
+
+LogBoxMesagge();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const [pokemon, setPokemon] = useState(initPokemon);
+const [isVisible, setIsVisible] = useState(false)
+const [isClickVisible, setIsClickVisible] = useState(true);
+
+useEffect(() => {
+  getPokemon().then(
+    pokemon => setPokemon(pokemon)
+  )
+}, []);
+
+  return (
+  <View style={styles.wrap}>
+
+    <Title />
+
+    <ViewPokemon
+      pokemon={pokemon}
+      isVisible={isVisible} />
+
+    <ClickmeButton
+      isClickVisible={isClickVisible}
+      handleClick={ () => handleClick( setIsVisible, setIsClickVisible, setPokemon ) }
+    />
+
+  </View>
+  );
+};
+
