@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
-import { View } from 'react-native';
 
-import { styles } from './src/themes/stylesTheme';
-
-import { Title, ViewPokemon, ClickmeButton } from './src/components';
 import { LogBoxMesagge, getPokemon, initPokemon, handleClick } from './src/helpers';
+import PokemonScreen from './src/screens/PokemonScreen';
 
 LogBoxMesagge();
 
@@ -14,27 +11,19 @@ const [pokemon, setPokemon] = useState(initPokemon);
 const [isVisible, setIsVisible] = useState(false)
 const [isClickVisible, setIsClickVisible] = useState(true);
 
+const getPokemonAsync = async () => setPokemon( await getPokemon() );
+
 useEffect(() => {
-  getPokemon().then(
-    pokemon => setPokemon(pokemon)
-  )
+  getPokemonAsync();
 }, []);
 
   return (
-  <View style={styles.wrap}>
-
-    <Title />
-
-    <ViewPokemon
+    <PokemonScreen
       pokemon={pokemon}
-      isVisible={isVisible} />
-
-    <ClickmeButton
+      isVisible={isVisible}
       isClickVisible={isClickVisible}
       handleClick={ () => handleClick( setIsVisible, setIsClickVisible, setPokemon ) }
     />
-
-  </View>
   );
 };
 
