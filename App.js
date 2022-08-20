@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { LogBoxMesagge, getPokemon, initPokemon, handleClick } from './src/helpers';
 import PokemonScreen from './src/screens/PokemonScreen';
 
-// Solucion a problema de carga de imagenes
 LogBoxMesagge();
 
 export default function App() {
